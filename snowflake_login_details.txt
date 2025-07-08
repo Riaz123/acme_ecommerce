@@ -1,0 +1,12 @@
+The Accelerant Snowflake tenant can be accessed at https://app.snowflake.com/accelins/hire/, you'll need to login to the tenant to change your password before you can run dbt.
+
+When you first log on, you will be prompted to select a multi-factor authentication option. Currently, only Duo works with dbt.
+
+Temporary User Info:
+   Username: RiazPinjari2
+   Role: RiazPinjari2_role
+   Email: riaz0609@gmail.com
+   First Name: Riaz
+   Last Name: Pinjari
+   Password: Test1234567890
+   Days to Expiry: 7

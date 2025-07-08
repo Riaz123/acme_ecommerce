@@ -1,0 +1,45 @@
+version: 2
+
+models:
+  - name: fct_sales
+    description: "Fact table for reporting eCommerce sales performance and drilldowns"
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+          - unique
+      - name: customer_email_address
+        tests:
+          - not_null
+      - name: customer_sales_band
+        tests:
+          - accepted_values:
+              values: ['$0-1000', '$1001-5000', '$5000+']
+
+  - name: fct_actual_vs_forecast
+    description: "Fact table comparing actual sales/profit to forecast by product, category, and month."
+    columns:
+      - name: product_id
+        description: "Product identifier."
+      - name: product_name
+        description: "Product name."
+      - name: product_category
+        description: "Product category."
+      - name: month
+        description: "Year and month (YYYY-MM) for reporting."
+      - name: actual_sales
+        description: "Actual sales quantity."
+      - name: actual_revenue
+        description: "Actual sales revenue."
+      - name: actual_cost
+        description: "Actual cost of goods sold."
+      - name: actual_profit
+        description: "Actual profit (revenue minus cost)."
+      - name: forecast_sales
+        description: "Forecasted sales quantity."
+      - name: forecast_profit
+        description: "Forecasted profit."
+      - name: quarter
+        description: "Reporting quarter."
+      - name: year
+        description: "Reporting year."

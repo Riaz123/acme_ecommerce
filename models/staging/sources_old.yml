@@ -1,0 +1,26 @@
+version: 2
+
+sources:
+  - name: reference_data
+    database: acme_ecommerce
+    schema: reference_data
+    tables:
+      - name: country
+      - name: customer
+      - name: product
+
+  - name: product_inventory
+    database: acme_ecommerce
+    schema: product_inventory
+    tables:
+      - name: inventory
+
+  - name: transactional_orders
+    database: acme_ecommerce
+    schema: transactional
+    tables:
+      - name: order_2023_q1
+      - name: order_2023_q2
+      - name: order_2023_q3
+      - name: order_2023_q4
+

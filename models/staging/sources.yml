@@ -1,0 +1,44 @@
+version: 2
+
+sources:
+  - name: plan
+    description: "The 'plan' schema contains planning and forecasting data for the eCommerce platform.
+      It includes tables with forecasted sales and profit figures used for financial planning and variance analysis."
+    database: ACME_ECOMMERCE
+    schema: PLAN
+    tables:
+      - name: SALES_FORECAST_2023
+        description: "Monthly sales and profit forecasts for the year 2023 by product.
+          This table is critical for comparing actual performance against planned targets,
+          enabling the Finance Director to monitor forecast accuracy and adjust strategies accordingly."
+        columns:
+          - name: forecast_profit
+            description: "Forecasted profit amount for the product in the given month."
+          - name: forecast_sales
+            description: "Forecasted sales quantity for the product in the given month."
+          - name: month
+            description: "The month for which the forecast applies, formatted as YYYY-MM."
+          - name: product
+            description: "Name of the product for which the forecast is made."
+  - name: product_inventory
+    database: ACME_ECOMMERCE
+    schema: PRODUCT_INVENTORY
+    tables:
+      - name: INVENTORY
+
+  - name: reference_data
+    database: ACME_ECOMMERCE
+    schema: REFERENCE_DATA
+    tables:
+      - name: COUNTRY
+      - name: CUSTOMER
+      - name: PRODUCT
+
+  - name: transactional
+    database: ACME_ECOMMERCE
+    schema: TRANSACTIONAL
+    tables:
+      - name: ORDER_2023_Q1
+      - name: ORDER_2023_Q2
+      - name: ORDER_2023_Q3
+      - name: ORDER_2023_Q4
