@@ -229,3 +229,161 @@ C. Mart/Star Schema Layer
 In summary:
 This dbt star schema project is modular, DRY, and testable. Each SQL transformation is purpose-built for data quality, business reporting, and analytics, with clear separation of concerns and robust testing/documentation throughout the pipeline.
 
+
+## Sample Sales Manager queries
+
+-- 1. Total Order Quantity & Value (All-Time)
+SELECT
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES;
+
+--2. Sales by Transaction Date
+SELECT
+  transaction_date,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY transaction_date
+ORDER BY transaction_date;
+
+--3. Sales by Transaction Month, Quarter, and Year
+--By Month:
+SELECT
+  transaction_month,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY transaction_month
+ORDER BY transaction_month;
+
+--By Quarter:
+SELECT
+  transaction_quarter,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY transaction_quarter
+ORDER BY transaction_quarter;
+
+--By Year:
+SELECT
+  transaction_year,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY transaction_year
+ORDER BY transaction_year;
+
+--4. Sales by Shipped Date, Month, Quarter, Year
+--By Shipped Month:
+SELECT
+  shipped_month,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY shipped_month
+ORDER BY shipped_month;
+
+--By Shipped Quarter:
+SELECT
+  shipped_quarter,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY shipped_quarter
+ORDER BY shipped_quarter;
+
+--By Shipped Year:
+SELECT
+  shipped_year,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY shipped_year
+ORDER BY shipped_year;
+
+--5. Sales by Product Name and Category
+SELECT
+  "product_name",
+  "product_category",
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY "product_name", "product_category"
+ORDER BY "product_category", "product_name";
+
+
+--6. Sales by Customer Name, Email, Country, Region, and Sales Band
+--By Customer Name and Email:
+SELECT
+  customer_name,
+  customer_email_address,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY customer_name, customer_email_address
+ORDER BY customer_name;
+
+--By Customer Country and Region:
+SELECT
+  customer_country,
+  customer_region,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY customer_country, customer_region
+ORDER BY customer_country, customer_region;
+
+--By Customer Sales Band:
+SELECT
+  customer_sales_band,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY customer_sales_band
+ORDER BY customer_sales_band;
+
+--7. Drilldown: Sales by Product, Month, and Sales Band
+SELECT
+  transaction_month,
+  "product_category",
+  "product_name",
+  customer_sales_band,
+  SUM(order_quantity) AS total_order_quantity,
+  SUM(order_value) AS total_order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+GROUP BY transaction_month, "product_category", "product_name", customer_sales_band
+ORDER BY transaction_month, "product_category", "product_name", customer_sales_band;
+
+--8. Detailed Drilldown: Individual Sales Records
+SELECT
+  "transaction_id",
+  transaction_date,
+  shipped_date,
+  "product_name",
+  "product_category",
+  customer_name,
+  customer_email_address,
+  customer_country,
+  customer_region,
+  customer_sales_band,
+  order_quantity,
+  order_value
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+ORDER BY transaction_date, "transaction_id";
+
+--9. Example: Targeting Customers for a Campaign (Band $5000+)
+SELECT DISTINCT
+  customer_name,
+  customer_email_address,
+  customer_sales_band
+FROM ANALYTICS.RIAZPINJARI2_MARTS.FCT_SALES
+WHERE customer_sales_band = '$5000+'
+ORDER BY customer_name;
+
+
+
+
+
+
